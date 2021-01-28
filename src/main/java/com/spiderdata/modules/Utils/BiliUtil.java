@@ -9,24 +9,23 @@ import org.python.util.PythonInterpreter;
  * @date 2021/1/28 11:46
  */
 public class BiliUtil {
-    private static String file = PathUtil.getClassPath() + "AVBV.py";
+    private static String file = PathUtil.getProjectPath() + "\\src\\main\\java\\com\\spiderdata\\modules\\Utils\\AVBV.py";
 
     public static PyObject BvToAv(String BV) {
         PythonInterpreter interpreter = new PythonInterpreter();
         System.out.println(file);
         interpreter.execfile(file);
         PyFunction pyFunction = interpreter.get("dec", PyFunction.class);
-        PyObject pyobj = pyFunction.__call__(Py.newString(BV));
-        return pyobj;
+        return pyFunction.__call__(Py.newString(BV));
     }
 
     public static PyObject AvToBv(int AV) {
         PythonInterpreter interpreter = new PythonInterpreter();
         interpreter.execfile(file);
         PyFunction pyFunction = interpreter.get("enc", PyFunction.class);
-        PyObject pyobj = pyFunction.__call__(Py.newInteger(AV));
-        return pyobj;
+        return pyFunction.__call__(Py.newInteger(AV));
     }
+
     public static void main(String[] args) {
         System.out.println(BvToAv("BV1qs41117pt"));
     }

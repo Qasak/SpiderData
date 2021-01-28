@@ -26,14 +26,17 @@ public class FileUtil {
      */
     public static boolean createDir(String destDirName) {
         File dir = new File(destDirName);
-        if (dir.exists()) {// 判断目录是否存在
+        // 判断目录是否存在
+        if (dir.exists()) {
             System.out.println("创建目录失败，目标目录已存在！");
             return false;
         }
-        if (!destDirName.endsWith(File.separator)) {// 结尾是否以"/"结束
+        // 结尾是否以"/"结束
+        if (!destDirName.endsWith(File.separator)) {
             destDirName = destDirName + File.separator;
         }
-        if (dir.mkdirs()) {// 创建目标目录
+        // 创建目标目录
+        if (dir.mkdirs()) {
             System.out.println("创建目录成功！" + destDirName);
             return true;
         } else {
@@ -51,14 +54,17 @@ public class FileUtil {
         flag = false;
         if (deletePath.matches(matches)) {
             file = new File(deletePath);
-            if (!file.exists()) {// 判断目录或文件是否存在
-                return flag; // 不存在返回 false
+            // 判断目录或文件是否存在
+            if (!file.exists()) {
+                return flag;
             } else {
-
-                if (file.isFile()) {// 判断是否为文件
-                    return deleteFile(deletePath);// 为文件时调用删除文件方法
+                // 判断是否为文件
+                if (file.isFile()) {
+                    // 为文件时调用删除文件方法
+                    return deleteFile(deletePath);
                 } else {
-                    return deleteDirectory(deletePath);// 为目录时调用删除目录方法
+                    // 为目录时调用删除目录方法
+                    return deleteDirectory(deletePath);
                 }
             }
         } else {
@@ -103,16 +109,19 @@ public class FileUtil {
             if (files[i].isFile()) {// 删除子文件
                 flag = deleteFile(files[i].getAbsolutePath());
                 System.out.println(files[i].getAbsolutePath() + " 删除成功");
-                if (!flag)
+                if (!flag) {
                     break;// 如果删除失败，则跳出
+                }
             } else {// 运用递归，删除子目录
                 flag = deleteDirectory(files[i].getAbsolutePath());
-                if (!flag)
+                if (!flag) {
                     break;// 如果删除失败，则跳出
+                }
             }
         }
-        if (!flag)
+        if (!flag) {
             return false;
+        }
         if (dirFile.delete()) {// 删除当前目录
             return true;
         } else {

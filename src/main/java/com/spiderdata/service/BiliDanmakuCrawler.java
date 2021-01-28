@@ -16,10 +16,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,8 +47,7 @@ public class BiliDanmakuCrawler {
             e.printStackTrace();
         }
 
-        String htmlStr = new String(resp.bodyAsBytes());
-        return htmlStr;
+        return new String(resp.bodyAsBytes());
     }
 
     public String getCid(String BV) {
@@ -63,7 +60,7 @@ public class BiliDanmakuCrawler {
         int r = l + 10;
         return htmlContent.substring(l, r);
     }
-    public String getCurdate() {
+    public String getCurDate() {
         Date date=new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
         return dateFormat.format(date);
@@ -118,7 +115,7 @@ public class BiliDanmakuCrawler {
         String name = getName(htmlStr);
         String[] urls = null;
         try {
-            urls = getDanMakuURLs(cid, uploadDate, getCurdate());
+            urls = getDanMakuURLs(cid, uploadDate, getCurDate());
         } catch (ParseException e) {
             e.printStackTrace();
         }
