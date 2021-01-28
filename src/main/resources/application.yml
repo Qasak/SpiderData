@@ -4,9 +4,17 @@ spring:
     username: root
     password: 123
     url: jdbc:mysql://localhost:3306/china_regions?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+  application:
+    name: SpiderData v1.0
+
+
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-    # ¿ØÖÆÌ¨ÈÕÖ¾ÅäÖÃ
+    # æ§åˆ¶å°æ—¥å¿—é…ç½®
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mappers/*.xml
+
+
+

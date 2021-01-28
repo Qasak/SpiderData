@@ -44,6 +44,16 @@ public class PathUtil {
      * 获取 root目录
      * @return path
      */
+
+
+    /**
+     * 获取资源目录
+     * */
+    public static String getResourcesPath() {
+        return regSlash(getProjectPath() + "\\src\\main\\resources\\");
+    }
+
+
     public static String getRootPath(){
         return getWEB_INF().replace("WEB-INF/", "");
     }
@@ -130,10 +140,13 @@ public class PathUtil {
     public static String getImages(){
         return getRootPath() + "images/" ;
     }
-    public static void main(String []args)
-    {
-        String url=PathUtil.getClassPath();
-        System.out.println(url);
+
+    public static String regSlash(String a) {
+        return a.replaceAll("\\\\", "/");
+    }
+
+    public static void main(String []args) {
+        System.out.println(regSlash("C:\\Users\\qasak\\Documents\\Project\\SpiderData\\src\\main\\resources\\application.yml"));
     }
 
 }

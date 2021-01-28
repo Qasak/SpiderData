@@ -1,6 +1,8 @@
 package com.spiderdata.modules.Utils;
 
+import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -16,6 +18,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +28,7 @@ import java.util.Map;
  * @date 2021/1/27 23:00
  */
 public class HttpClientUtil {
-    public static String doGet(String url, Map<String, String> param) {
+    public static String doGet(String url, Map<String, String> param, String[] proxy) {
         // 创建Httpclient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         String resultString = "";
@@ -41,6 +44,28 @@ public class HttpClientUtil {
             URI uri = builder.build();
             // 创建http GET请求
             HttpGet httpGet = new HttpGet(uri);
+            HttpHost host = null;
+
+            if (param != null) {
+                for (String key : param.keySet()) {
+                    System.out.println(param.get(key));
+                    httpGet.addHeader(key, param.get(key));
+                }
+            }
+            System.out.println("------------------------------------");
+            System.out.println("------------------------------------");
+            if(proxy != null) {
+                host = new HttpHost(proxy[0],Integer.parseInt(proxy[1]));
+            }
+            RequestConfig requestConfig = RequestConfig.custom()
+                    .setProxy(host)
+                    .setConnectTimeout(10000)
+                    .setSocketTimeout(10000)
+                    .setConnectionRequestTimeout(3000)
+                    .build();
+            httpGet.setConfig(requestConfig);
+
+
             // 执行请求
             response = httpclient.execute(httpGet);
             // 判断返回状态是否为200
@@ -64,7 +89,9 @@ public class HttpClientUtil {
     public static String doGet(String url) {
         return doGet(url, null);
     }
-
+    public static String doGet(String url, Map<String, String> param) {
+        return doGet(url, param, null);
+    }
 
 
     public static String doPost(String url, Map<String, String> param) {

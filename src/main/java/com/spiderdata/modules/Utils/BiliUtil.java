@@ -13,7 +13,6 @@ public class BiliUtil {
 
     public static PyObject BvToAv(String BV) {
         PythonInterpreter interpreter = new PythonInterpreter();
-        System.out.println(file);
         interpreter.execfile(file);
         PyFunction pyFunction = interpreter.get("dec", PyFunction.class);
         return pyFunction.__call__(Py.newString(BV));
@@ -21,7 +20,6 @@ public class BiliUtil {
 
     public static PyObject AvToBv(int AV) {
         PythonInterpreter interpreter = new PythonInterpreter();
-        interpreter.execfile(file);
         PyFunction pyFunction = interpreter.get("enc", PyFunction.class);
         return pyFunction.__call__(Py.newInteger(AV));
     }

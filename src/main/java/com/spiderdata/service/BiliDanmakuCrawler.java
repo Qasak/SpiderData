@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.spiderdata.modules.Utils.DateUtil;
 import com.spiderdata.modules.Utils.FileUtil;
 import com.spiderdata.modules.Utils.HttpClientUtil;
+import com.spiderdata.modules.Utils.YmlUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -11,6 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.python.antlr.ast.Str;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +21,8 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,11 +32,12 @@ import java.util.regex.Pattern;
  * @date 2021/1/27 15:02
  */
 public class BiliDanmakuCrawler {
-    private static String PRE = "https://www.bilibili.com/video/";
-    private static String DMApi = "https://api.bilibili.com/x/v2/dm/history?type=1&oid=";
-    private static String cookies = "finger=158939783; _uuid=DE8235D8-8550-81BE-ADF3-F698B2DF856536004infoc; buvid3=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; sid=ij5ha9c8; rpdid=|(um~RJ|l~~m0J'ulm|llJJ~m; LIVE_BUVID=AUTO9215905813485624; blackside_state=1; CURRENT_FNVAL=80; DedeUserID=11689723; DedeUserID__ckMd5=1a2c4273157904b0; SESSDATA=e4e1c1db%2C1622175408%2C16c7d*b1; bili_jct=a15d734323f864cbf1871ea7e1f7263e; fingerprint3=1bb45130b449763996b51220debb436c; buivd_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; buvid_fp_plain=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; balh_server_inner=__custom__; balh_is_closed=; CURRENT_QUALITY=116; fingerprint=808a8738b5d287030fb5e53c1f3dfee5; fingerprint_s=d089dc07f74b49e27b28a8a5992ff378; buvid_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; bp_video_offset_11689723=483132276899750738; bsource=search_google; PVID=1; bfe_id=5112800f2e3d3cf17a473918472e345c";
-    private static String UserAgent = "Mozilla/5.0(Windows NT 10.0;WOW64) AppleWebKit/537.36(KHTML,likeGecko)Chrome/63.0.3239.132Safari/537.36";
-    private static String addr = "C:\\Users\\qasak\\Documents\\bili\\";
+    private static Map<String, String> map = YmlUtil.getYmlByFileName("biliconfig.yml");
+    private static String PRE = map.get("url.pre");
+    private static String DMApi = map.get("url.DMApi");
+    private static String cookies = map.get("header.cookies");
+    private static String UserAgent = map.get("header.UserAgent");
+    private static String addr = map.get("dir.addr");
 
     public String getHtmlString(String url) {
         Connection.Response resp = null;
@@ -83,16 +88,15 @@ public class BiliDanmakuCrawler {
     }
 
     public static void getContentToFile(String url, String BV, String day, String name) throws Exception{
-        CloseableHttpClient closeableHttpClient = HttpClients.createDefault() ;
-        HttpGet httpGet1 = new HttpGet(url);
-        httpGet1.addHeader("cookie", cookies);
-        httpGet1.addHeader("User-Agent", UserAgent);
-        CloseableHttpResponse httpResponse1 = closeableHttpClient.execute(httpGet1) ;
-        String en = EntityUtils.toString(httpResponse1.getEntity(), "UTF-8");
+        Map<String, String> map = new HashMap<>();
+        map.put("cookie", cookies);
+        map.put("User-Agent", UserAgent);
+        String[] s = new String[]{"127.0.0.1", "1080"};
+        String en = HttpClientUtil.doGet(url, map, s);
         String c = "\">(.*?)<" ;
         Pattern a = Pattern.compile(c);
         Matcher m = a.matcher(en);
-        String dir = "C:\\Users\\qasak\\Documents\\bili\\" + name + "_" + BV +"\\";
+        String dir = addr + name + "_" + BV +"\\";
         FileUtil.createDir(dir);
         File file = new File(dir + day + ".txt");
         if(file.exists()){
@@ -120,6 +124,7 @@ public class BiliDanmakuCrawler {
             e.printStackTrace();
         }
         for(String url : urls) {
+
             String day = url.substring(url.indexOf("date=") + 5);
             System.out.println(url);
             try {
@@ -137,7 +142,6 @@ public class BiliDanmakuCrawler {
     public static void main(String[] args) {
         BiliDanmakuCrawler b = new BiliDanmakuCrawler();
         String BV = "BV1qs41117pt";
-//        System.out.println(b.getCid(BV));
         b.recordDanmaku(BV);
     }
 }
