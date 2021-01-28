@@ -75,9 +75,9 @@ public class YmlUtil {
                 str_new = key;
             }
             if(val instanceof Map){
-                forEachYaml(str_new,(Map<String, Object>) val);
+                forEachYaml(str_new, (Map<String, Object>) val);
             }else{
-                result.put(str_new,val.toString());
+                result.put(str_new, val.toString());
             }
         }
         return result;

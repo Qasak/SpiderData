@@ -48,12 +48,10 @@ public class HttpClientUtil {
 
             if (param != null) {
                 for (String key : param.keySet()) {
-                    System.out.println(param.get(key));
                     httpGet.addHeader(key, param.get(key));
                 }
             }
-            System.out.println("------------------------------------");
-            System.out.println("------------------------------------");
+
             if(proxy != null) {
                 host = new HttpHost(proxy[0],Integer.parseInt(proxy[1]));
             }

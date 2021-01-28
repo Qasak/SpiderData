@@ -6,7 +6,7 @@
 
 
 dir:
-  save: C:\\Users\\qasak\\Documents\\bili\\
+  addr: C:\\Users\\qasak\\Documents\\bili\\
 
 
 url:
@@ -16,3 +16,7 @@ url:
 header:
   cookies: _uuid=DE8235D8-8550-81BE-ADF3-F698B2DF856536004infoc; buvid3=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; sid=ij5ha9c8; rpdid=|(um~RJ|l~~m0J'ulm|llJJ~m; LIVE_BUVID=AUTO9215905813485624; blackside_state=1; CURRENT_FNVAL=80; Hm_lvt_8a6e55dbd2870f0f5bc9194cddf32a02=1603071535; DedeUserID=11689723; DedeUserID__ckMd5=1a2c4273157904b0; SESSDATA=e4e1c1db%2C1622175408%2C16c7d*b1; bili_jct=a15d734323f864cbf1871ea7e1f7263e; fingerprint3=1bb45130b449763996b51220debb436c; buivd_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; buvid_fp_plain=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; balh_server_inner=__custom__; balh_is_closed=; CURRENT_QUALITY=116; fingerprint=808a8738b5d287030fb5e53c1f3dfee5; fingerprint_s=d089dc07f74b49e27b28a8a5992ff378; buvid_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; bp_video_offset_11689723=483132276899750738; finger=158939783; bsource=search_google; PVID=1
   UserAgent: Mozilla/5.0(Windows NT 10.0;WOW64) AppleWebKit/537.36(KHTML,likeGecko)Chrome/63.0.3239.132Safari/537.36
+
+proxy:
+  ip: 127.0.0.1
+  port: 1080

@@ -5,14 +5,8 @@ import com.spiderdata.modules.Utils.DateUtil;
 import com.spiderdata.modules.Utils.FileUtil;
 import com.spiderdata.modules.Utils.HttpClientUtil;
 import com.spiderdata.modules.Utils.YmlUtil;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.python.antlr.ast.Str;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,6 +32,8 @@ public class BiliDanmakuCrawler {
     private static String cookies = map.get("header.cookies");
     private static String UserAgent = map.get("header.UserAgent");
     private static String addr = map.get("dir.addr");
+    private static String proxyIP = map.get("proxy.ip");
+    private static String proxyPort = map.get("proxy.port");
 
     public String getHtmlString(String url) {
         Connection.Response resp = null;
@@ -86,30 +82,35 @@ public class BiliDanmakuCrawler {
         }
         return urls;
     }
-
-    public static void getContentToFile(String url, String BV, String day, String name) throws Exception{
+    // <d p="弹幕出现时间,模式,字体大小,颜色,发送时间戳,弹幕池,用户Hash,数据库ID">123123</d>
+    // <d p="0.13400,1,25,16777215,1442243493,0,a668adff,1210303425">我是欧洲人A路人</d>
+    public static void writeContentToFile(String url, String BV, String day, String name) throws Exception{
         Map<String, String> map = new HashMap<>();
         map.put("cookie", cookies);
         map.put("User-Agent", UserAgent);
-        String[] s = new String[]{"127.0.0.1", "1080"};
-        String en = HttpClientUtil.doGet(url, map, s);
+        String[] proxy = null;
+        if(proxyPort != null && proxyIP != null) {
+            proxy = new String[]{"127.0.0.1", "1080"};
+        }
+        String en = HttpClientUtil.doGet(url, map, proxy);
         String c = "\">(.*?)<" ;
         Pattern a = Pattern.compile(c);
         Matcher m = a.matcher(en);
         String dir = addr + name + "_" + BV +"\\";
         FileUtil.createDir(dir);
-        File file = new File(dir + day + ".txt");
+        File file = new File(dir + day + ".xml");
         if(file.exists()){
             file.delete();
         }
-        OutputStream fos=new FileOutputStream(dir + "\\" + day + ".txt");
-        while(m.find()){
-            String speak = m.group().replace("\">","") ;
-            speak = speak.replace("<","") ;
-            String str=speak;
-            str+="\n";
-            fos.write(str.getBytes());
-        }
+        OutputStream fos=new FileOutputStream(dir + "\\" + day + ".xml");
+//        while(m.find()){
+//            String speak = m.group().replace("\">","") ;
+//            speak = speak.replace("<","") ;
+//            String str=speak;
+//            str+="\n";
+//            fos.write(str.getBytes());
+//        }
+        fos.write(en.getBytes());
     }
 
     public void recordDanmaku(String BV) {
@@ -128,7 +129,7 @@ public class BiliDanmakuCrawler {
             String day = url.substring(url.indexOf("date=") + 5);
             System.out.println(url);
             try {
-                getContentToFile(url, BV, day, name);
+                writeContentToFile(url, BV, day, name);
             } catch (Exception e) {
                 e.printStackTrace();
             }
