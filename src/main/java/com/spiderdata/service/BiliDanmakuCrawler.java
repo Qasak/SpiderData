@@ -254,15 +254,5 @@ public class BiliDanmakuCrawler {
 
 
     public static void main(String[] args) {
-        BiliDanmakuCrawler b = new BiliDanmakuCrawler();
-        String BV = "BV1FV411d7u7";
-        int av = 221107;
-        b.recordDanmakuToFile(BV);
-
-        Date date = new Date();
-        System.out.println(date.getTime());
-        long l1 = 44408780018941957L;
-        long l2 = 44405284175085575L;
-
     }
 }

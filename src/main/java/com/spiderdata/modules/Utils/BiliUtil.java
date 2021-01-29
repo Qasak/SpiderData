@@ -4,7 +4,6 @@ import org.python.core.*;
 import org.python.util.PythonInterpreter;
 import org.springframework.stereotype.Service;
 
-import java.rmi.server.UID;
 import java.util.zip.CRC32;
 
 /**
