@@ -3,8 +3,10 @@
 #private static String cookies = "finger=158939783; _uuid=DE8235D8-8550-81BE-ADF3-F698B2DF856536004infoc; buvid3=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; sid=ij5ha9c8; rpdid=|(um~RJ|l~~m0J'ulm|llJJ~m; LIVE_BUVID=AUTO9215905813485624; blackside_state=1; CURRENT_FNVAL=80; DedeUserID=11689723; DedeUserID__ckMd5=1a2c4273157904b0; SESSDATA=e4e1c1db%2C1622175408%2C16c7d*b1; bili_jct=a15d734323f864cbf1871ea7e1f7263e; fingerprint3=1bb45130b449763996b51220debb436c; buivd_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; buvid_fp_plain=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; balh_server_inner=__custom__; balh_is_closed=; CURRENT_QUALITY=116; fingerprint=808a8738b5d287030fb5e53c1f3dfee5; fingerprint_s=d089dc07f74b49e27b28a8a5992ff378; buvid_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; bp_video_offset_11689723=483132276899750738; bsource=search_google; PVID=1; bfe_id=5112800f2e3d3cf17a473918472e345c";
 #private static String UserAgent = "Mozilla/5.0(Windows NT 10.0;WOW64) AppleWebKit/537.36(KHTML,likeGecko)Chrome/63.0.3239.132Safari/537.36";
 #private static String addr = "C:\\Users\\qasak\\Documents\\bili\\";
-
-
+# _uuid=DE8235D8-8550-81BE-ADF3-F698B2DF856536004infoc; buvid3=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; sid=ij5ha9c8; rpdid=|(um~RJ|l~~m0J'ulm|llJJ~m; LIVE_BUVID=AUTO9215905813485624; blackside_state=1; CURRENT_FNVAL=80; fingerprint3=1bb45130b449763996b51220debb436c; buivd_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; balh_server_inner=__custom__; balh_is_closed=; CURRENT_QUALITY=116; fingerprint_s=d089dc07f74b49e27b28a8a5992ff378; buvid_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; bp_video_offset_11689723=483132276899750738; bsource=search_google; PVID=1; fingerprint=213008dc527504711e1f22b7d3a36e50; buvid_fp_plain=4AC54684-188B-4758-8965-385AE8EC799153950infoc; DedeUserID=92588731; DedeUserID__ckMd5=ff9c4d80c56f4655; SESSDATA=64ecbccf%2C1627438796%2C9c3b3*11; bili_jct=7d6e64149fe069b25c95611d4f91be6f
+# "SESSDATA=49d4147c%256557247677%2Cf295e641;domain=.bilibili.com;path=/"
+#  SESSDATA=64ecbccf%2C1627438796%2C9c3b3*11
+#  SESSDATA=e4e1c1db%2C1622175408%2C16c7d*b1
 dir:
   addr: C:\\Users\\qasak\\Documents\\bili\\
 
@@ -14,7 +16,7 @@ url:
   DMApi: https://api.bilibili.com/x/v2/dm/history?type=1&oid=
 
 header:
-  cookies: _uuid=DE8235D8-8550-81BE-ADF3-F698B2DF856536004infoc; buvid3=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; sid=ij5ha9c8; rpdid=|(um~RJ|l~~m0J'ulm|llJJ~m; LIVE_BUVID=AUTO9215905813485624; blackside_state=1; CURRENT_FNVAL=80; Hm_lvt_8a6e55dbd2870f0f5bc9194cddf32a02=1603071535; DedeUserID=11689723; DedeUserID__ckMd5=1a2c4273157904b0; SESSDATA=e4e1c1db%2C1622175408%2C16c7d*b1; bili_jct=a15d734323f864cbf1871ea7e1f7263e; fingerprint3=1bb45130b449763996b51220debb436c; buivd_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; buvid_fp_plain=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; balh_server_inner=__custom__; balh_is_closed=; CURRENT_QUALITY=116; fingerprint=808a8738b5d287030fb5e53c1f3dfee5; fingerprint_s=d089dc07f74b49e27b28a8a5992ff378; buvid_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; bp_video_offset_11689723=483132276899750738; finger=158939783; bsource=search_google; PVID=1
+  cookies: SESSDATA=64ecbccf%2C1627438796%2C9c3b3*11;domain=.bilibili.com;path=/
   UserAgent: Mozilla/5.0(Windows NT 10.0;WOW64) AppleWebKit/537.36(KHTML,likeGecko)Chrome/63.0.3239.132Safari/537.36
 
 proxy:

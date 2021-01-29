@@ -3,6 +3,8 @@ package com.spiderdata.modules.Utils;
 import org.python.core.*;
 import org.python.util.PythonInterpreter;
 
+import java.util.Date;
+
 /**
  * @author Wangjs
  * @version 1.0
@@ -20,11 +22,13 @@ public class BiliUtil {
 
     public static PyObject AvToBv(int AV) {
         PythonInterpreter interpreter = new PythonInterpreter();
+        interpreter.execfile(file);
         PyFunction pyFunction = interpreter.get("enc", PyFunction.class);
         return pyFunction.__call__(Py.newInteger(AV));
     }
 
     public static void main(String[] args) {
-        System.out.println(BvToAv("BV1qs41117pt"));
+        Date date = new Date(1330096318000L);
+        System.out.println(date.toString());
     }
 }

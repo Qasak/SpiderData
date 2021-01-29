@@ -1,18 +1,17 @@
 package com.spiderdata.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.spiderdata.modules.Utils.DateUtil;
-import com.spiderdata.modules.Utils.FileUtil;
-import com.spiderdata.modules.Utils.HttpClientUtil;
-import com.spiderdata.modules.Utils.YmlUtil;
+import com.spiderdata.modules.Utils.*;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.python.antlr.ast.Str;
+import org.python.core.PyObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -113,6 +112,14 @@ public class BiliDanmakuCrawler {
 //        }
         fos.write(en.getBytes());
     }
+    public void recordDanmaku(int av) {
+        String BV = BiliUtil.AvToBv(av).asString();
+        recordDanmaku(BV, null, null);
+    }
+    public void recordDanmaku(int av, String fromDate) {
+        String BV = BiliUtil.AvToBv(av).asString();
+        recordDanmaku(BV, fromDate, null);
+    }
     public void recordDanmaku(String BV) {
         recordDanmaku(BV, null, null);
     }
@@ -145,7 +152,7 @@ public class BiliDanmakuCrawler {
                 e.printStackTrace();
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -154,7 +161,14 @@ public class BiliDanmakuCrawler {
 
     public static void main(String[] args) {
         BiliDanmakuCrawler b = new BiliDanmakuCrawler();
-        String BV = "BV1qs41117pt";
-        b.recordDanmaku(BV, "2017-10-24");
+        String BV = "BV1FV411d7u7";
+        int av = 221107;
+        b.recordDanmaku(BV);
+
+        Date date = new Date();
+        System.out.println(date.getTime());
+        long l1 = 44408780018941957L;
+        long l2 = 44405284175085575L;
+
     }
 }

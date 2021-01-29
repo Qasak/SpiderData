@@ -17,7 +17,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/china_regions?characterEncoding=utf-8"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/bilibili?characterEncoding=utf-8"
                         userId="root"
                         password="123">
         </jdbcConnection>
@@ -39,7 +39,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 <!--        <table tableName="mall_shipping" domainObjectName="Shipping" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>-->
-        <table tableName="china_regions" domainObjectName="ChinaRegions" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="bilibili_danmaku" domainObjectName="BilibiliDanmaku" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
 
     </context>
 </generatorConfiguration>
