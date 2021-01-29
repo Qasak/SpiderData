@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spiderdata.modules.dao.BilibiliDanmakuMapper">
+  <resultMap id="BaseResultMap" type="com.spiderdata.modules.pojo.BilibiliDanmaku">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="bv" jdbcType="VARCHAR" property="bv" />
+    <result column="bili_db_id" jdbcType="BIGINT" property="biliDbId" />
+    <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="user_hash" jdbcType="VARCHAR" property="userHash" />
+    <result column="appear_time" jdbcType="REAL" property="appearTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, bv, bili_db_id, send_time, content, user_hash, appear_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bilibili_danmaku
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from bilibili_danmaku
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.spiderdata.modules.pojo.BilibiliDanmaku">
+    insert into bilibili_danmaku (id, bv, bili_db_id, 
+      send_time, content, user_hash, 
+      appear_time)
+    values (#{id,jdbcType=BIGINT}, #{bv,jdbcType=VARCHAR}, #{biliDbId,jdbcType=BIGINT}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, #{userHash,jdbcType=VARCHAR}, 
+      #{appearTime,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.spiderdata.modules.pojo.BilibiliDanmaku">
+    insert into bilibili_danmaku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bv != null">
+        bv,
+      </if>
+      <if test="biliDbId != null">
+        bili_db_id,
+      </if>
+      <if test="sendTime != null">
+        send_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="userHash != null">
+        user_hash,
+      </if>
+      <if test="appearTime != null">
+        appear_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bv != null">
+        #{bv,jdbcType=VARCHAR},
+      </if>
+      <if test="biliDbId != null">
+        #{biliDbId,jdbcType=BIGINT},
+      </if>
+      <if test="sendTime != null">
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userHash != null">
+        #{userHash,jdbcType=VARCHAR},
+      </if>
+      <if test="appearTime != null">
+        #{appearTime,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.spiderdata.modules.pojo.BilibiliDanmaku">
+    update bilibili_danmaku
+    <set>
+      <if test="bv != null">
+        bv = #{bv,jdbcType=VARCHAR},
+      </if>
+      <if test="biliDbId != null">
+        bili_db_id = #{biliDbId,jdbcType=BIGINT},
+      </if>
+      <if test="sendTime != null">
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userHash != null">
+        user_hash = #{userHash,jdbcType=VARCHAR},
+      </if>
+      <if test="appearTime != null">
+        appear_time = #{appearTime,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.spiderdata.modules.pojo.BilibiliDanmaku">
+    update bilibili_danmaku
+    set bv = #{bv,jdbcType=VARCHAR},
+      bili_db_id = #{biliDbId,jdbcType=BIGINT},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      user_hash = #{userHash,jdbcType=VARCHAR},
+      appear_time = #{appearTime,jdbcType=REAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

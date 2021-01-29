@@ -113,26 +113,29 @@ public class BiliDanmakuCrawler {
 
     public void recordDanmakuStream(int av) {
         String BV = BiliUtil.AvToBv(av).asString();
-        recordDanmakuStream(BV, null, null);
+        recordDanmakuStream(BV, "", "");
     }
     public void recordDanmakuStream(int av, String fromDate) {
         String BV = BiliUtil.AvToBv(av).asString();
-        recordDanmakuStream(BV, fromDate, null);
+        recordDanmakuStream(BV, fromDate, "");
     }
     public void recordDanmakuStream(String BV) {
-        recordDanmakuStream(BV, null, null);
+        recordDanmakuStream(BV, "", "");
     }
     public void recordDanmakuStream(String BV, String fromDate) {
-        recordDanmakuStream(BV, fromDate, null);
+        recordDanmakuStream(BV, fromDate, "");
     }
     //
     public void recordDanmakuStream(String BV, String fromDate, String toDate) {
         String cid = getCid(BV);
-        if(fromDate == null && toDate == null) {
+        int n = fromDate.length();
+        int m = toDate.length();
+        System.out.println(fromDate);
+        if((n == 0 && m == 0)) {
             String htmlStr = getHtmlString(PRE + BV);
             fromDate = getUploadDate(htmlStr);
             toDate = getCurDate();
-        } else if(toDate == null) {
+        } else if(m == 0) {
             toDate = getCurDate();
         }
         String[] urls = null;
