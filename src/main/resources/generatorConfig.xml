@@ -39,7 +39,9 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 <!--        <table tableName="mall_shipping" domainObjectName="Shipping" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>-->
-        <table tableName="bilibili_danmaku" domainObjectName="BilibiliDanmaku" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="bilibili_danmaku" domainObjectName="BilibiliDanmaku" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+
+
 
     </context>
 </generatorConfiguration>

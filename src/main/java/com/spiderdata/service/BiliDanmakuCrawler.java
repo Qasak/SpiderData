@@ -2,16 +2,17 @@ package com.spiderdata.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.spiderdata.modules.Utils.*;
+import com.spiderdata.modules.dao.BilibiliDanmakuMapper;
+import com.spiderdata.modules.pojo.BilibiliDanmaku;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.python.antlr.ast.Str;
-import org.python.core.PyObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +26,11 @@ import java.util.regex.Pattern;
  * @version 1.0
  * @date 2021/1/27 15:02
  */
+
+@Service
 public class BiliDanmakuCrawler {
+    @Autowired
+    private BilibiliDanmakuMapper bilibiliDanmakuMapper;
     private static Map<String, String> map = YmlUtil.getYmlByFileName("biliconfig.yml");
     private static final String PRE = map.get("url.pre");
     private static final String DM_API = map.get("url.DMApi");
@@ -82,9 +87,7 @@ public class BiliDanmakuCrawler {
         }
         return urls;
     }
-    // <d p="弹幕出现时间,模式,字体大小,颜色,发送时间戳,弹幕池,用户Hash,数据库ID">123123</d>
-    // <d p="0.13400,1,25,16777215,1442243493,0,a668adff,1210303425">我是欧洲人A路人</d>
-    public static void writeContentToFile(String url, String BV, String day, String name) throws Exception{
+    public static String getDanmakuContent(String url) {
         Map<String, String> map = new HashMap<>();
         map.put("cookie", COOKIES);
         map.put("User-Agent", USER_AGENT);
@@ -92,10 +95,12 @@ public class BiliDanmakuCrawler {
         if(PROXY_IP != null && PROXY_PORT != null) {
             proxy = new String[]{PROXY_IP, PROXY_PORT};
         }
-        String en = HttpClientUtil.doGet(url, map, proxy);
-        String c = "\">(.*?)<" ;
-        Pattern a = Pattern.compile(c);
-        Matcher m = a.matcher(en);
+        return HttpClientUtil.doGet(url, map, proxy);
+    }
+    // <d p="弹幕出现时间,模式,字体大小,颜色,发送时间戳,弹幕池,用户Hash,数据库ID">123123</d>
+    // <d p="0.13400,1,25,16777215,1442243493,0,a668adff,1210303425">我是欧洲人A路人</d>
+    public static void writeContent(String url, String BV, String day, String name) throws Exception{
+        String content = getDanmakuContent(url);
         String dir = ADDR + name + "_" + BV +"\\";
         FileUtil.createDir(dir);
         File file = new File(dir + day + ".xml");
@@ -103,30 +108,69 @@ public class BiliDanmakuCrawler {
             file.delete();
         }
         OutputStream fos=new FileOutputStream(dir + "\\" + day + ".xml");
-//        while(m.find()){
-//            String speak = m.group().replace("\">","") ;
-//            speak = speak.replace("<","") ;
-//            String str=speak;
-//            str+="\n";
-//            fos.write(str.getBytes());
-//        }
-        fos.write(en.getBytes());
+        fos.write(content.getBytes());
     }
-    public void recordDanmaku(int av) {
+
+    public void recordDanmakuStream(int av) {
         String BV = BiliUtil.AvToBv(av).asString();
-        recordDanmaku(BV, null, null);
+        recordDanmakuStream(BV, null, null);
     }
-    public void recordDanmaku(int av, String fromDate) {
+    public void recordDanmakuStream(int av, String fromDate) {
         String BV = BiliUtil.AvToBv(av).asString();
-        recordDanmaku(BV, fromDate, null);
+        recordDanmakuStream(BV, fromDate, null);
     }
-    public void recordDanmaku(String BV) {
-        recordDanmaku(BV, null, null);
+    public void recordDanmakuStream(String BV) {
+        recordDanmakuStream(BV, null, null);
     }
-    public void recordDanmaku(String BV, String fromDate) {
-        recordDanmaku(BV, fromDate, null);
+    public void recordDanmakuStream(String BV, String fromDate) {
+        recordDanmakuStream(BV, fromDate, null);
     }
-    public void recordDanmaku(String BV, String fromDate, String toDate) {
+    //
+    public void recordDanmakuStream(String BV, String fromDate, String toDate) {
+        String cid = getCid(BV);
+        if(fromDate == null && toDate == null) {
+            String htmlStr = getHtmlString(PRE + BV);
+            fromDate = getUploadDate(htmlStr);
+            toDate = getCurDate();
+        } else if(toDate == null) {
+            toDate = getCurDate();
+        }
+        String[] urls = null;
+        try {
+            urls = getDanMakuURLs(cid, fromDate, toDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for(String url : urls) {
+            try {
+                biliDanmakuStreamToSql(url, BV);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public void recordDanmakuToFile(int av) {
+        String BV = BiliUtil.AvToBv(av).asString();
+        recordDanmakuToFile(BV, null, null);
+    }
+    public void recordDanmakuToFile(int av, String fromDate) {
+        String BV = BiliUtil.AvToBv(av).asString();
+        recordDanmakuToFile(BV, fromDate, null);
+    }
+    public void recordDanmakuToFile(String BV) {
+        recordDanmakuToFile(BV, null, null);
+    }
+    public void recordDanmakuToFile(String BV, String fromDate) {
+        recordDanmakuToFile(BV, fromDate, null);
+    }
+    public void recordDanmakuToFile(String BV, String fromDate, String toDate) {
         String htmlStr = getHtmlString(PRE + BV);
         String cid = getCid(BV);
         if(fromDate == null && toDate == null) {
@@ -143,11 +187,10 @@ public class BiliDanmakuCrawler {
             e.printStackTrace();
         }
         for(String url : urls) {
-
             String day = url.substring(url.indexOf("date=") + 5);
             System.out.println(url);
             try {
-                writeContentToFile(url, BV, day, name);
+                writeContent(url, BV, day, name);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -158,12 +201,60 @@ public class BiliDanmakuCrawler {
             }
         }
     }
+    public void biliDanmakuFileToSql(String BV, String fileName) {
+        String content = null;
+        try {
+            content = XmlUtil.getAll(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        xmlToSql(content, BV);
+    }
+
+    public void biliDanmakuStreamToSql(String url, String BV) {
+        String content = getDanmakuContent(url);
+        xmlToSql(content, BV);
+    }
+
+    public void xmlToSql(String content, String BV) {
+        String c = "\"(.*?)</d" ;
+        Pattern a = Pattern.compile(c);
+        Matcher m = a.matcher(content);
+        while(m.find()) {
+            String line = m.group();
+            line = line.replace("</d", "");
+            line = line.replace("\"", "");
+
+            String[] str = line.split(">");
+            // 1.0 encoding=UTF-8? 跳过这19个字符
+            if (str[0].length() == 19) {
+                continue;
+            }
+            String[] p = str[0].split(",");
+            long biliDbId = Long.parseLong(p[7]);
+            Date sendTime = new Date(Long.parseLong(p[4]) * 1000);
+            String danmaku = str[1];
+            String userHash = p[6];
+            float appearTime = Float.parseFloat(p[0]);
+            System.out.println(biliDbId + " " + sendTime + " " + danmaku + " " + userHash + " " + appearTime);
+            BilibiliDanmaku b = new BilibiliDanmaku(
+                    null,
+                    BV,
+                    biliDbId,
+                    sendTime,
+                    danmaku,
+                    userHash,
+                    appearTime);
+            bilibiliDanmakuMapper.insert(b);
+        }
+    }
+
 
     public static void main(String[] args) {
         BiliDanmakuCrawler b = new BiliDanmakuCrawler();
         String BV = "BV1FV411d7u7";
         int av = 221107;
-        b.recordDanmaku(BV);
+        b.recordDanmakuToFile(BV);
 
         Date date = new Date();
         System.out.println(date.getTime());

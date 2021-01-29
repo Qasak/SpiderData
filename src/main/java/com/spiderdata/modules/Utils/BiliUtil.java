@@ -3,7 +3,8 @@ package com.spiderdata.modules.Utils;
 import org.python.core.*;
 import org.python.util.PythonInterpreter;
 
-import java.util.Date;
+import java.rmi.server.UID;
+import java.util.zip.CRC32;
 
 /**
  * @author Wangjs
@@ -27,8 +28,24 @@ public class BiliUtil {
         return pyFunction.__call__(Py.newInteger(AV));
     }
 
+    public static String UIDtoCrc(String UID) {
+        CRC32 crc = new CRC32();
+        crc.update(UID.getBytes());
+
+        return Long.toHexString(crc.getValue());
+    }
+    public static int CrcToUID(String crc) {
+        for(int i = 0; i < 1000000000; i++) {
+            if(UIDtoCrc((String.valueOf(i))).equals(crc)) {
+                return i;
+            }
+        }
+        return -1;
+    }
     public static void main(String[] args) {
-        Date date = new Date(1330096318000L);
-        System.out.println(date.toString());
+        // 零号用户，f4dbdf21 -> 0 。2012-02-25 12:08:10 在 BV1Hx411w7XK发了很多  乾杯 - ( ゜- ゜)つロ
+        // 546195 老番茄 -> 190a48b8
+        System.out.println(UIDtoCrc("546195"));
+//        System.out.println(CrcToUID("eeab2bf4"));
     }
 }
