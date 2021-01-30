@@ -1,6 +1,6 @@
 package com.spiderdata.modules.controller;
 
-import com.spiderdata.modules.Utils.BiliUtil;
+import com.spiderdata.modules.Utils.Impl.BiliUtil;
 import com.spiderdata.service.Impl.BiliDanmakuCrawlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

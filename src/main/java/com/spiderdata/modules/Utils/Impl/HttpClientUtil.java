@@ -1,4 +1,4 @@
-package com.spiderdata.modules.Utils;
+package com.spiderdata.modules.Utils.Impl;
 
 import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;

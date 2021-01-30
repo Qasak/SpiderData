@@ -1,10 +1,7 @@
-package com.spiderdata.modules.Utils;
+package com.spiderdata.modules.Utils.Impl;
 
 import java.io.*;
-import java.util.Date;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Wangjs

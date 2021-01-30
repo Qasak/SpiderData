@@ -66,4 +66,7 @@ public interface IBiliDanmakuCrawler {
 
     public void xmlToSql(String content, String BV);
 
+
+    // TODO: 视频标题里某个关键词出现的次数
+
 }
