@@ -6,8 +6,7 @@ package com.spiderdata.modules.Utils;
  * @date 2021/1/28 9:44
  */
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 //创建新文件和目录
 public class FileUtil {
@@ -76,7 +75,7 @@ public class FileUtil {
     /**
      * 删除单个文件
      * @param filePath 文件路径
-     * @return
+     * @return 是否成功删除
      */
     public boolean deleteFile(String filePath) {
         flag = false;
@@ -90,8 +89,8 @@ public class FileUtil {
 
     /**
      * 删除目录（文件夹）以及目录下的文件
-     * @param dirPath
-     * @return
+     * @param dirPath 目录位置
+     * @return 是否成功删除
      */
     public boolean deleteDirectory(String dirPath) {
         // 如果sPath不以文件分隔符结尾，自动添加文件分隔符
@@ -207,7 +206,19 @@ public class FileUtil {
             }
         }
     }
-
+    public static void writeContentToFile(String content, String filePath) {
+        OutputStream fos= null;
+        try {
+            fos = new FileOutputStream(filePath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.write(content.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         String dirName = "E:/createFile/";// 创建目录
         FileUtil.createDir(dirName);// 调用方法创建目录

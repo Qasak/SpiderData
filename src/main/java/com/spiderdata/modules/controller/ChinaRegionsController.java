@@ -1,6 +1,6 @@
 package com.spiderdata.modules.controller;
 
-import com.spiderdata.service.ChinaRegionCrawler;
+import com.spiderdata.service.Impl.ChinaRegionCrawlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChinaRegionsController {
     @Autowired
-    private ChinaRegionCrawler chinaRegionCrawler;
+    private ChinaRegionCrawlerImpl chinaRegionCrawlerImpl;
 
     @GetMapping("/chinaregion")
     public String hello() {
-        chinaRegionCrawler.chinaRegionToSql();
+        chinaRegionCrawlerImpl.chinaRegionToSql();
         return "chinaregion";
     }
 

@@ -1,18 +1,16 @@
-package com.spiderdata.service;
+package com.spiderdata.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.spiderdata.modules.Utils.*;
 import com.spiderdata.modules.dao.BilibiliDanmakuMapper;
 import com.spiderdata.modules.pojo.BilibiliDanmaku;
+import com.spiderdata.service.IBiliDanmakuCrawler;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,7 +26,7 @@ import java.util.regex.Pattern;
  */
 
 @Service
-public class BiliDanmakuCrawler {
+public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
     @Autowired
     private BilibiliDanmakuMapper bilibiliDanmakuMapper;
     private static Map<String, String> map = YmlUtil.getYmlByFileName("biliconfig.yml");
@@ -40,6 +38,7 @@ public class BiliDanmakuCrawler {
     private static final String PROXY_IP = map.get("proxy.ip");
     private static final String PROXY_PORT = map.get("proxy.port");
 
+    @Override
     public String getHtmlString(String url) {
         Connection.Response resp = null;
         try {
@@ -56,26 +55,35 @@ public class BiliDanmakuCrawler {
         return new String(resp.bodyAsBytes());
     }
 
+
+    @Override
     public String getCid(String BV) {
         String result = HttpClientUtil.doGet("https://api.bilibili.com/x/player/pagelist?bvid="+BV+"&jsonp=jsonp");
         return JSONObject.parseObject(result).getJSONArray("data").getJSONObject(0).getString("cid");
     }
 
+
+    @Override
     public String getUploadDate(String htmlContent) {
         int l = htmlContent.indexOf("\"uploadDate\" content=") + 22;
         int r = l + 10;
         return htmlContent.substring(l, r);
     }
+
+    @Override
     public String getCurDate() {
         Date date=new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(date);
     }
 
+    @Override
     public String getName(String htmlContent) {
         String tmp = htmlContent.substring(htmlContent.indexOf("\"og:title\" content=\"") + 20);
         return tmp.substring(0, tmp.indexOf('_'));
     }
+
+    @Override
     public String[] getDanMakuURLs(String cid, String fromDate, String toDate) throws ParseException {
         int days = DateUtil.daysBetween(fromDate, toDate);
         String[] urls = new String[days + 1];
@@ -87,7 +95,9 @@ public class BiliDanmakuCrawler {
         }
         return urls;
     }
-    public static String getDanmakuContent(String url) {
+
+    @Override
+    public String getDanmakuContent(String url) {
         Map<String, String> map = new HashMap<>();
         map.put("cookie", COOKIES);
         map.put("User-Agent", USER_AGENT);
@@ -97,35 +107,42 @@ public class BiliDanmakuCrawler {
         }
         return HttpClientUtil.doGet(url, map, proxy);
     }
+
+
     // <d p="弹幕出现时间,模式,字体大小,颜色,发送时间戳,弹幕池,用户Hash,数据库ID">123123</d>
     // <d p="0.13400,1,25,16777215,1442243493,0,a668adff,1210303425">我是欧洲人A路人</d>
-    public static void writeContent(String url, String BV, String day, String name) throws Exception{
+
+    @Override
+    public void writeContent(String url, String BV, String day, String name){
         String content = getDanmakuContent(url);
         String dir = ADDR + name + "_" + BV +"\\";
+        String filePath = dir + day + ".xml";
         FileUtil.createDir(dir);
-        File file = new File(dir + day + ".xml");
-        if(file.exists()){
-            file.delete();
-        }
-        OutputStream fos=new FileOutputStream(dir + "\\" + day + ".xml");
-        fos.write(content.getBytes());
+        FileUtil.createFile(filePath);
+        FileUtil.writeContentToFile(content, filePath);
     }
 
+    @Override
     public void recordDanmakuStream(int av) {
         String BV = BiliUtil.AvToBv(av).asString();
         recordDanmakuStream(BV, "", "");
     }
+    @Override
     public void recordDanmakuStream(int av, String fromDate) {
         String BV = BiliUtil.AvToBv(av).asString();
         recordDanmakuStream(BV, fromDate, "");
     }
+    @Override
     public void recordDanmakuStream(String BV) {
         recordDanmakuStream(BV, "", "");
     }
+
+    @Override
     public void recordDanmakuStream(String BV, String fromDate) {
         recordDanmakuStream(BV, fromDate, "");
     }
-    //
+
+    @Override
     public void recordDanmakuStream(String BV, String fromDate, String toDate) {
         String cid = getCid(BV);
         int n = fromDate.length();
@@ -159,20 +176,27 @@ public class BiliDanmakuCrawler {
     }
 
 
+    @Override
     public void recordDanmakuToFile(int av) {
         String BV = BiliUtil.AvToBv(av).asString();
         recordDanmakuToFile(BV, null, null);
     }
+    @Override
     public void recordDanmakuToFile(int av, String fromDate) {
         String BV = BiliUtil.AvToBv(av).asString();
         recordDanmakuToFile(BV, fromDate, null);
     }
+    @Override
     public void recordDanmakuToFile(String BV) {
         recordDanmakuToFile(BV, null, null);
     }
+
+    @Override
     public void recordDanmakuToFile(String BV, String fromDate) {
         recordDanmakuToFile(BV, fromDate, null);
     }
+
+    @Override
     public void recordDanmakuToFile(String BV, String fromDate, String toDate) {
         String htmlStr = getHtmlString(PRE + BV);
         String cid = getCid(BV);
@@ -204,6 +228,8 @@ public class BiliDanmakuCrawler {
             }
         }
     }
+
+    @Override
     public void biliDanmakuFileToSql(String BV, String fileName) {
         String content = null;
         try {
@@ -214,11 +240,13 @@ public class BiliDanmakuCrawler {
         xmlToSql(content, BV);
     }
 
+    @Override
     public void biliDanmakuStreamToSql(String url, String BV) {
         String content = getDanmakuContent(url);
         xmlToSql(content, BV);
     }
 
+    @Override
     public void xmlToSql(String content, String BV) {
         String c = "\"(.*?)</d" ;
         Pattern a = Pattern.compile(c);
@@ -254,5 +282,10 @@ public class BiliDanmakuCrawler {
 
 
     public static void main(String[] args) {
+        String url = "https://www.bilibili.com/video/BV1qt411j7fV";
+        BiliDanmakuCrawlerImpl b = new BiliDanmakuCrawlerImpl();
+        b.recordDanmakuStream("BV1sU4y1s7bs");
+//        FileUtil.createFile();
+
     }
 }

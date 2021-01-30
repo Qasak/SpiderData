@@ -1,4 +1,4 @@
-package com.spiderdata.service;
+package com.spiderdata.service.Impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.spiderdata.modules.dao.ChinaRegionsMapper;
@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 
 @Service
-public class ChinaRegionCrawler {
+public class ChinaRegionCrawlerImpl {
 
     @Autowired
     private ChinaRegionsMapper chinaRegionsMapper;
@@ -99,7 +99,7 @@ public class ChinaRegionCrawler {
     }
 
     public static void main(String[] args) throws IOException {
-        ChinaRegionCrawler c = new ChinaRegionCrawler();
+        ChinaRegionCrawlerImpl c = new ChinaRegionCrawlerImpl();
         c.chinaRegionToSql();
     }
 }
