@@ -13,8 +13,8 @@ import java.util.zip.CRC32;
  */
 
 @Service
-public class BiliUtil {
-    private static String file = PathUtil.getProjectPath() + "\\src\\main\\java\\com\\spiderdata\\modules\\Utils\\AVBV.py";
+public class BiliUtils {
+    private static String file = PathUtils.getProjectPath() + "\\src\\main\\java\\com\\spiderdata\\modules\\Utils\\AVBV.py";
 
     public static PyObject BvToAv(String BV) {
         PythonInterpreter interpreter = new PythonInterpreter();

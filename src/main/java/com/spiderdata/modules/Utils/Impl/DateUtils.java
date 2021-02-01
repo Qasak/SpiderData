@@ -11,7 +11,7 @@ import java.util.Date;
  * @version 1.0
  * @date 2021/1/27 16:04
  */
-public class DateUtil {
+public class DateUtils {
     public static String getNextDay(String curDate) {
         DateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
         try {

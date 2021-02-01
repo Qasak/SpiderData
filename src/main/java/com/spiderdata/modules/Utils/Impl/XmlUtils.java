@@ -8,8 +8,8 @@ import java.util.Map;
  * @version 1.0
  * @date 2021/1/28 23:02
  */
-public class XmlUtil {
-    private static Map<String, String> map = YmlUtil.getYmlByFileName("biliconfig.yml");
+public class XmlUtils {
+    private static Map<String, String> map = YmlUtils.getYmlByFileName("biliconfig.yml");
     private static final String ADDR = map.get("dir.addr");
 
     public static String getAll(String fileName) throws IOException {

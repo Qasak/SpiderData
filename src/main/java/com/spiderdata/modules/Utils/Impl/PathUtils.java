@@ -10,7 +10,7 @@ import java.util.Date;
  * @version 1.0
  * @date 2021/1/28 15:41
  */
-public class PathUtil {
+public class PathUtils {
     /**
      * 获取到classes目录
      * @return path
@@ -19,10 +19,10 @@ public class PathUtil {
         String systemName = System.getProperty("os.name");//windows 10
         //判断当前环境，如果是Windows 要截取路径的第一个 '/'
         //indexOf 方法返回一个整数值，指出 String 对象内子字符串的开始位置。如果没有找到子字符串，则返回-1
-        if(!StringUtil.isEmpty(systemName) && systemName.indexOf("Windows") !=-1){
-            return PathUtil.class.getResource("/").getFile().toString().substring(1);
+        if(!StringUtils.isEmpty(systemName) && systemName.indexOf("Windows") !=-1){
+            return PathUtils.class.getResource("/").getFile().toString().substring(1);
         }else{
-            return PathUtil.class.getResource("/").getFile().toString();
+            return PathUtils.class.getResource("/").getFile().toString();
         }
     }
     /**

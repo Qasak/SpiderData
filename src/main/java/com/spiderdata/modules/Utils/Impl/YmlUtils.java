@@ -12,7 +12,7 @@ import java.util.Map;
 * @date 2021/1/28 17:25
 */
 
-public class YmlUtil {
+public class YmlUtils {
     private static String bootstrap_file = "application.yml";
     private static String biliConfig = "biliconfig.yml";
     private static Map<String,String> result = new HashMap<>();
@@ -25,7 +25,7 @@ public class YmlUtil {
         if(file == null) {
             file = bootstrap_file;
         }
-        InputStream in = YmlUtil.class.getClassLoader().getResourceAsStream(file);
+        InputStream in = YmlUtils.class.getClassLoader().getResourceAsStream(file);
         Yaml props = new Yaml();
         Object obj = props.loadAs(in, Map.class);
         Map<String,Object> param = (Map<String, Object>) obj;
@@ -69,7 +69,7 @@ public class YmlUtil {
             Object val = entry.getValue();
 
             String str_new = "";
-            if(StringUtil.isNotEmpty(key_str)){
+            if(StringUtils.isNotEmpty(key_str)){
                 str_new = key_str+ "."+key;
             }else{
                 str_new = key;

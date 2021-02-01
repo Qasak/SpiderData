@@ -27,7 +27,7 @@ import java.util.Map;
  * @version 1.0
  * @date 2021/1/27 23:00
  */
-public class HttpClientUtil {
+public class HttpClientUtils {
     public static String doGet(String url, Map<String, String> param, String[] proxy) {
         // 创建Httpclient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();

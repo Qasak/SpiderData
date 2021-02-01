@@ -9,7 +9,7 @@ package com.spiderdata.modules.Utils.Impl;
 import java.io.*;
 
 //创建新文件和目录
-public class FileUtil {
+public class FileUtils {
 
     // 验证字符串是否为正确路径名的正则表达式
     private static String matches = "[A-Za-z]:\\\\[^:?\"><*]*";
@@ -191,7 +191,7 @@ public class FileUtil {
             File dir = new File(dirName);// 创建目录
             if (!dir.exists()) {
                 // 如果目录不存在则创建目录
-                if (FileUtil.createDir(dirName)) {
+                if (FileUtils.createDir(dirName)) {
                     System.out.println("创建临时文件失败，不能创建临时文件所在的目录！");
                     return null;
                 }
@@ -221,14 +221,14 @@ public class FileUtil {
     }
     public static void main(String[] args) {
         String dirName = "E:/createFile/";// 创建目录
-        FileUtil.createDir(dirName);// 调用方法创建目录
+        FileUtils.createDir(dirName);// 调用方法创建目录
         String fileName = dirName + "/file1.txt";// 创建文件
-        FileUtil.createFile(fileName);// 调用方法创建文件
+        FileUtils.createFile(fileName);// 调用方法创建文件
         String prefix = "temp";// 创建临时文件
         String surfix = ".txt";// 后缀
         for (int i = 0; i < 10; i++) {// 循环创建多个文件
             System.out.println("创建临时文件: "// 调用方法创建临时文件
-                    + FileUtil.createTempFile(prefix, surfix,
+                    + FileUtils.createTempFile(prefix, surfix,
                     dirName));
         }
     }

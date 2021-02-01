@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * @version 1.0
  * @date 2021/1/29 14:42
  */
-public class SqlUtil {
+public class SqlUtils {
 
     public static void main(String[] args) throws IOException {
     }

@@ -5,7 +5,7 @@ package com.spiderdata.modules.Utils.Impl;
  * @version 1.0
  * @date 2021/1/28 15:43
  */
-public class StringUtil {
+public class StringUtils {
 
     /**
      * 判断是否为空字符串最优代码

@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
     @Autowired
     private BilibiliDanmakuMapper bilibiliDanmakuMapper;
-    private static Map<String, String> map = YmlUtil.getYmlByFileName("biliconfig.yml");
+    private static Map<String, String> map = YmlUtils.getYmlByFileName("biliconfig.yml");
     private static final String PRE = map.get("url.pre");
     private static final String DM_API = map.get("url.DMApi");
     private static final String COOKIES = map.get("header.cookies");
@@ -58,7 +58,7 @@ public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
 
     @Override
     public String getCid(String BV) {
-        String result = HttpClientUtil.doGet("https://api.bilibili.com/x/player/pagelist?bvid="+BV+"&jsonp=jsonp");
+        String result = HttpClientUtils.doGet("https://api.bilibili.com/x/player/pagelist?bvid="+BV+"&jsonp=jsonp");
         return JSONObject.parseObject(result).getJSONArray("data").getJSONObject(0).getString("cid");
     }
 
@@ -85,13 +85,13 @@ public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
 
     @Override
     public String[] getDanMakuURLs(String cid, String fromDate, String toDate) throws ParseException {
-        int days = DateUtil.daysBetween(fromDate, toDate);
+        int days = DateUtils.daysBetween(fromDate, toDate);
         String[] urls = new String[days + 1];
         String nextDay = fromDate;
         for(int i = 0; i <= days; i++) {
             String URL = DM_API + cid + "&date=" + nextDay;
             urls[i] = URL;
-            nextDay = DateUtil.getNextDay(nextDay);
+            nextDay = DateUtils.getNextDay(nextDay);
         }
         return urls;
     }
@@ -105,7 +105,7 @@ public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
         if(PROXY_IP != null && PROXY_PORT != null) {
             proxy = new String[]{PROXY_IP, PROXY_PORT};
         }
-        return HttpClientUtil.doGet(url, map, proxy);
+        return HttpClientUtils.doGet(url, map, proxy);
     }
 
 
@@ -117,19 +117,19 @@ public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
         String content = getDanmakuContent(url);
         String dir = ADDR + name + "_" + BV +"\\";
         String filePath = dir + day + ".xml";
-        FileUtil.createDir(dir);
-        FileUtil.createFile(filePath);
-        FileUtil.writeContentToFile(content, filePath);
+        FileUtils.createDir(dir);
+        FileUtils.createFile(filePath);
+        FileUtils.writeContentToFile(content, filePath);
     }
 
     @Override
     public void recordDanmakuStream(int av) {
-        String BV = BiliUtil.AvToBv(av).asString();
+        String BV = BiliUtils.AvToBv(av).asString();
         recordDanmakuStream(BV, "", "");
     }
     @Override
     public void recordDanmakuStream(int av, String fromDate) {
-        String BV = BiliUtil.AvToBv(av).asString();
+        String BV = BiliUtils.AvToBv(av).asString();
         recordDanmakuStream(BV, fromDate, "");
     }
     @Override
@@ -178,12 +178,12 @@ public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
 
     @Override
     public void recordDanmakuToFile(int av) {
-        String BV = BiliUtil.AvToBv(av).asString();
+        String BV = BiliUtils.AvToBv(av).asString();
         recordDanmakuToFile(BV, null, null);
     }
     @Override
     public void recordDanmakuToFile(int av, String fromDate) {
-        String BV = BiliUtil.AvToBv(av).asString();
+        String BV = BiliUtils.AvToBv(av).asString();
         recordDanmakuToFile(BV, fromDate, null);
     }
     @Override
@@ -233,7 +233,7 @@ public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
     public void biliDanmakuFileToSql(String BV, String fileName) {
         String content = null;
         try {
-            content = XmlUtil.getAll(fileName);
+            content = XmlUtils.getAll(fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }

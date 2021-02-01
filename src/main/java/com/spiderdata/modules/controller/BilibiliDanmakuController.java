@@ -1,6 +1,6 @@
 package com.spiderdata.modules.controller;
 
-import com.spiderdata.modules.Utils.Impl.BiliUtil;
+import com.spiderdata.modules.Utils.Impl.BiliUtils;
 import com.spiderdata.service.Impl.BiliDanmakuCrawlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ public class BilibiliDanmakuController {
     @Autowired
     private BiliDanmakuCrawlerImpl biliDanmakuCrawlerImpl;
     @Autowired
-    private BiliUtil biliUtil;
+    private BiliUtils biliUtils;
     @GetMapping("/danmaku")
     public String hello(@RequestParam String BV,
                         @RequestParam(required = false, defaultValue = "") String fromDate,
@@ -28,6 +28,6 @@ public class BilibiliDanmakuController {
     }
     @GetMapping("/av2bv")
     public String getUid(@RequestParam String av) {
-        return BiliUtil.AvToBv(Integer.parseInt(av)).asString();
+        return BiliUtils.AvToBv(Integer.parseInt(av)).asString();
     }
 }
