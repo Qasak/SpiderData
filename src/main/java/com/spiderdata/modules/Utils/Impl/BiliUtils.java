@@ -48,7 +48,9 @@ public class BiliUtils {
         // 零号用户，f4dbdf21 -> 0 。2012-02-25 12:08:10 在 BV1Hx411w7XK发了很多  乾杯 - ( ゜- ゜)つロ
         // 546195 老番茄 -> 190a48b8
         // 748709 奇美拉 ->
-        System.out.println(UIDtoCrc("0"));
-//        System.out.println(CrcToUID("8abd66e"));
+
+        //
+//        System.out.println(UIDtoCrc("387822145"));
+        System.out.println(CrcToUID("77684180"));
     }
 }

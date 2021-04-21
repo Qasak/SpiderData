@@ -85,6 +85,7 @@ public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
 
     @Override
     public String[] getDanMakuURLs(String cid, String fromDate, String toDate) throws ParseException {
+        System.out.println(fromDate + " " + toDate);
         int days = DateUtils.daysBetween(fromDate, toDate);
         String[] urls = new String[days + 1];
         String nextDay = fromDate;
@@ -162,6 +163,7 @@ public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
             e.printStackTrace();
         }
         for(String url : urls) {
+            System.out.println(url);
             try {
                 biliDanmakuStreamToSql(url, BV);
             } catch (Exception e) {
@@ -284,8 +286,9 @@ public class BiliDanmakuCrawlerImpl implements IBiliDanmakuCrawler {
     public static void main(String[] args) {
         String url = "https://www.bilibili.com/video/BV1qt411j7fV";
         BiliDanmakuCrawlerImpl b = new BiliDanmakuCrawlerImpl();
-        b.recordDanmakuStream("BV1sU4y1s7bs");
+//        b.recordDanmakuStream("BV1sU4y1s7bs");
 //        FileUtil.createFile();
+        System.out.println(b.getCid("BV1JT4y1P77e"));
 
     }
 }

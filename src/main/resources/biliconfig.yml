@@ -7,6 +7,8 @@
 # "SESSDATA=49d4147c%256557247677%2Cf295e641;domain=.bilibili.com;path=/"
 #  SESSDATA=64ecbccf%2C1627438796%2C9c3b3*11
 #  SESSDATA=e4e1c1db%2C1622175408%2C16c7d*b1
+
+# _uuid=DE8235D8-8550-81BE-ADF3-F698B2DF856536004infoc; buvid3=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; rpdid=|(um~RJ|l~~m0J'ulm|llJJ~m; LIVE_BUVID=AUTO9215905813485624; blackside_state=1; CURRENT_FNVAL=80; fingerprint3=1bb45130b449763996b51220debb436c; buivd_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; balh_server_inner=__custom__; balh_is_closed=; CURRENT_QUALITY=116; buvid_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; bp_video_offset_11689723=483132276899750738; fingerprint_s=1b3395188e2da7b942953cb75cd22011; fingerprint=0ccca445791242113a8843851c41e225; buvid_fp_plain=F4878235-7CF8-00B9-056E-477DAE244B1591236infoc; SESSDATA=f5afa21f%2C1627746927%2Cf4fa0%2A21; bili_jct=7074a45b8fec7ac4193c4410e4e98b8a; DedeUserID=11689723; DedeUserID__ckMd5=1a2c4273157904b0; sid=cvyp0j6d; PVID=1
 dir:
   addr: C:\\Users\\qasak\\Documents\\bili\\
 
@@ -16,7 +18,7 @@ url:
   DMApi: https://api.bilibili.com/x/v2/dm/history?type=1&oid=
 
 header:
-  cookies: SESSDATA=64ecbccf%2C1627438796%2C9c3b3*11;domain=.bilibili.com;path=/
+  cookies: _uuid=DE8235D8-8550-81BE-ADF3-F698B2DF856536004infoc; buvid3=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; rpdid=|(um~RJ|l~~m0J'ulm|llJJ~m; LIVE_BUVID=AUTO9215905813485624; blackside_state=1; CURRENT_FNVAL=80; fingerprint3=1bb45130b449763996b51220debb436c; buivd_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; balh_server_inner=__custom__; balh_is_closed=; CURRENT_QUALITY=116; buvid_fp=5B16B126-8FAB-4037-B144-320E8CBDFC6B155826infoc; bp_video_offset_11689723=483132276899750738; fingerprint_s=1b3395188e2da7b942953cb75cd22011; fingerprint=0ccca445791242113a8843851c41e225; buvid_fp_plain=F4878235-7CF8-00B9-056E-477DAE244B1591236infoc; SESSDATA=f5afa21f%2C1627746927%2Cf4fa0%2A21; bili_jct=7074a45b8fec7ac4193c4410e4e98b8a; DedeUserID=11689723; DedeUserID__ckMd5=1a2c4273157904b0; sid=cvyp0j6d; PVID=1
   UserAgent: Mozilla/5.0(Windows NT 10.0;WOW64) AppleWebKit/537.36(KHTML,likeGecko)Chrome/63.0.3239.132Safari/537.36
 
 proxy:

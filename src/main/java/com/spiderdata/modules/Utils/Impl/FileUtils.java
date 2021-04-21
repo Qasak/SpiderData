@@ -219,6 +219,20 @@ public class FileUtils {
             e.printStackTrace();
         }
     }
+
+    public static void appendContentToFile(String content, String filePath) {
+        OutputStream fos= null;
+        try {
+            fos = new FileOutputStream(filePath, true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.write(content.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         String dirName = "E:/createFile/";// 创建目录
         FileUtils.createDir(dirName);// 调用方法创建目录
